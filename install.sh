@@ -4,6 +4,8 @@ echo "WELCOME TO FLAME'S DOTFILES!"
 echo "---------------------------"
 echo "1) Git Config"
 
+cp .gitconfig ~/.gitconfig
+
 echo "Enter your first and last name: "
 read full_name
 
