@@ -1,7 +1,19 @@
-[user]
-	name = Gabriel Badea
-	email = gabi.badea313@gmail.com
+[include]
+	path = ~/.gitconfig.local
 [color]
 	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
 [core]
 	editor = code --wait
+[user]
+	name = NAMEHERE
+	email = EMAILHERE
+[help]
+	autocorrect = 1
+[push]
+	default = simple
+[init]
+	defaultBranch = master
