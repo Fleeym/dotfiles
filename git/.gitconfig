@@ -1,0 +1,7 @@
+[user]
+	name = Gabriel Badea
+	email = gabi.badea313@gmail.com
+[color]
+	ui = auto
+[core]
+	editor = code --wait
