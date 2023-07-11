@@ -1,3 +1,3 @@
-require("flame.remap")
-require("flame.packer")
 require("flame.set")
+require("flame.packer")
+require("flame.remap")

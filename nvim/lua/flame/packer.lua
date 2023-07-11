@@ -5,7 +5,7 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
-        requires = { {'nvim-lua/plenary.nvim'} }
+        requires = { { 'nvim-lua/plenary.nvim' } }
     }
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -15,10 +15,10 @@ return require('packer').startup(function(use)
         end,
     }
 
-    use ({ 
-        "catppuccin/nvim", 
+    use({
+        "catppuccin/nvim",
         as = "catppuccin",
-        config = function ()
+        config = function()
             vim.cmd('colorscheme catppuccin')
         end
     })
@@ -38,28 +38,31 @@ return require('packer').startup(function(use)
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         requires = {
-                -- LSP Support
-                {'neovim/nvim-lspconfig'},             -- Required
-                {                                      -- Optional
+            -- LSP Support
+            { 'neovim/nvim-lspconfig' }, -- Required
+            {                            -- Optional
                 'williamboman/mason.nvim',
                 run = function()
                     pcall(vim.cmd, 'MasonUpdate')
                 end,
             },
-            {'williamboman/mason-lspconfig.nvim'}, -- Optional
+            { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
             -- Autocompletion
-            {'hrsh7th/nvim-cmp'},     -- Required
-            {'hrsh7th/cmp-nvim-lsp'}, -- Required
-            {'L3MON4D3/LuaSnip'},     -- Required
+            { 'hrsh7th/nvim-cmp' },     -- Required
+            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+            { 'L3MON4D3/LuaSnip' },     -- Required
         }
     }
-
     use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons', -- optional
-        },
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
     }
 
+    use('MunifTanjim/prettier.nvim')
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        requires = { "nvim-lua/plenary.nvim" },
+    })
+    use('jay-babu/mason-null-ls.nvim')
 end)
