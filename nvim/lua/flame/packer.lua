@@ -51,12 +51,22 @@ return require('packer').startup(function(use)
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },     -- Required
             { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+            { 'rafamadriz/friendly-snippets' },
             { 'L3MON4D3/LuaSnip' },     -- Required
         }
     }
     use {
         "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
+        requires = { "hrsh7th/nvim-cmp" },
+        config = function()
+            require("nvim-autopairs").setup {}
+            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+            local cmp = require('cmp')
+            cmp.event:on(
+                "confirm_done",
+                cmp_autopairs.on_confirm_done()
+            )
+        end
     }
 
     use('MunifTanjim/prettier.nvim')
@@ -65,4 +75,20 @@ return require('packer').startup(function(use)
         requires = { "nvim-lua/plenary.nvim" },
     })
     use('jay-babu/mason-null-ls.nvim')
+    use('github/copilot.vim')
+    use {
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require('indent_blankline').setup {
+                show_current_context = true,
+                show_current_context_start = true
+            }
+        end
+    }
+    use {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
 end)
