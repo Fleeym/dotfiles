@@ -6,7 +6,6 @@ vim.opt.title = true
 
 vim.opt.showcmd = true
 vim.opt.shell = 'zsh'
-vim.opt.laststatus = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
