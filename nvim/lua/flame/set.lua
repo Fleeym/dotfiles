@@ -1,4 +1,18 @@
-vim.opt.nu = true
+local vim = vim
+
+vim.scriptencoding = 'utf-8'
+
+vim.opt.title = true
+
+vim.opt.showcmd = true
+vim.opt.shell = 'zsh'
+vim.opt.laststatus = true
+
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.smarttab = true
+
+vim.opt.number = true
 vim.opt.relativenumber = true
 
 vim.opt.tabstop = 4
@@ -7,6 +21,15 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 vim.opt.smartindent = true
+vim.opt.backspace = "indent,eol,start"
+
+vim.opt.path:append { "**" }
+vim.opt.wildignore:append { "*/node_modules/*", "*/.git/*", "*/.DS_Store" }
+vim.opt.formatoptions:append { 'r' }
+
+vim.opt.cursorline = true
+vim.opt.termguicolors = true
+vim.opt.winblend = 0
 
 vim.opt.wrap = false
 

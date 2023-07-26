@@ -8,14 +8,34 @@ lsp.ensure_installed({
     'efm'
 })
 
+lsp.on_attach(function(client, bufnr)
+    lsp.default_keymaps({ buffer = bufnr })
+end)
+
 lsp.format_on_save({
     format_opts = {
         async = false,
         timeout_ms = 10000,
     },
     servers = {
-        ['lua_ls'] = {'lua'},
-        ['null-ls'] = {'javascript', 'typescript', 'php', 'css', 'scss'},
+        ['lua_ls'] = { 'lua' },
+        ['null-ls'] = { 'javascript', 'typescript', 'php', 'css', 'scss' },
+    }
+})
+
+require('lspconfig').lua_ls.setup({
+    settings = {
+        Lua = {
+            runtime = {
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                globals = { 'vim' }
+            },
+            telemetry = {
+                enable = false,
+            }
+        }
     }
 })
 
