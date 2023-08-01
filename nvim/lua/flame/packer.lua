@@ -68,6 +68,12 @@ return require('packer').startup(function(use)
             )
         end
     }
+    use {
+        'windwp/nvim-ts-autotag',
+        config = function()
+            require('nvim-ts-autotag').setup()
+        end
+    }
 
     use('MunifTanjim/prettier.nvim')
     use({
@@ -95,4 +101,11 @@ return require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
+    use({
+        'nvimdev/lspsaga.nvim',
+        after = 'nvim-lspconfig',
+        config = function()
+            require('lspsaga').setup({})
+        end,
+    })
 end)
