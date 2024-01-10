@@ -1,3 +1,3 @@
 require("flame.set")
-require("flame.packer")
+require("flame.lazy")
 require("flame.remap")

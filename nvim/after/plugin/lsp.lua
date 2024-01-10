@@ -1,11 +1,16 @@
 local lsp = require('lsp-zero').preset({})
 
-lsp.ensure_installed({
-    'tsserver',
-    'eslint',
-    'intelephense',
-    'lua_ls',
-    'efm'
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = {
+        'tsserver',
+        'eslint',
+        'intelephense',
+        'lua_ls',
+    },
+    handlers = {
+        lsp.default_setup
+    }
 })
 
 lsp.on_attach(function(client, bufnr)

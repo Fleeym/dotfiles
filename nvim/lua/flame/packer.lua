@@ -84,12 +84,6 @@ return require('packer').startup(function(use)
     use('github/copilot.vim')
     use {
         "lukas-reineke/indent-blankline.nvim",
-        config = function()
-            require('indent_blankline').setup {
-                show_current_context = true,
-                show_current_context_start = true
-            }
-        end
     }
     use {
         "lewis6991/gitsigns.nvim",
