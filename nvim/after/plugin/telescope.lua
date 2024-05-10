@@ -12,8 +12,8 @@ telescope.load_extension "file_browser"
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>pv', function()
+vim.keymap.set('n', '<leader>fb', function()
     require("telescope").extensions.file_browser.file_browser()
 end)
-vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', builtin.live_grep, {})

@@ -92,7 +92,29 @@ return {
         dependencies = {
             { 'nvim-treesitter/nvim-treesitter' },
             { 'nvim-tree/nvim-web-devicons' }
-        }
+        },
+        config = function()
+            require('lspsaga').setup({})
+        end
     },
-    { "ellisonleao/gruvbox.nvim",           priority = 1000, config = true, opts = ... }
+    {
+        "ellisonleao/gruvbox.nvim",
+        priority = 1000,
+        config = true,
+        opts = ...
+    },
+    {
+        'echasnovski/mini.notify',
+        version = false,
+        config = function()
+            require('mini.notify').setup()
+        end
+    },
+    {
+        'echasnovski/mini.comment',
+        version = false,
+        config = function()
+            require('mini.comment').setup()
+        end
+    },
 }
