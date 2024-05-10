@@ -7,6 +7,7 @@ require('mason-lspconfig').setup({
         'eslint',
         'intelephense',
         'lua_ls',
+        'rust_analyzer'
     },
     handlers = {
         lsp.default_setup
@@ -61,5 +62,9 @@ null_ls.setup({
 
 require("mason-null-ls").setup({
     automatic_installation = true,
-    ensure_installed = nil
+    ensure_installed = {
+        "pint",
+        "prettierd",
+        "phpstan"
+    }
 })
