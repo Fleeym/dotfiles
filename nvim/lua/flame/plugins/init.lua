@@ -64,8 +64,12 @@ return {
         "nvimtools/none-ls.nvim",
         dependencies = { { "nvim-lua/plenary.nvim" } }
     },
-    { 'jay-babu/mason-null-ls.nvim' },
-    { 'github/copilot.vim' },
+    {
+        'jay-babu/mason-null-ls.nvim',
+        dependencies = {
+            "nvimtools/none-ls-extras.nvim"
+        }
+    },
     { 'lukas-reineke/indent-blankline.nvim' },
     {
         "lewis6991/gitsigns.nvim",
@@ -85,5 +89,6 @@ return {
             { 'nvim-treesitter/nvim-treesitter' },
             { 'nvim-tree/nvim-web-devicons' }
         }
-    }
+    },
+    { "ellisonleao/gruvbox.nvim",           priority = 1000, config = true, opts = ... }
 }
