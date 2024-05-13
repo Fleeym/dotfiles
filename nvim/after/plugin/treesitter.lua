@@ -11,6 +11,7 @@ require 'nvim-treesitter.configs'.setup {
         "vim",
         "vimdoc",
         "php",
+        "rust",
         "markdown",
         "markdown_inline"
     },
