@@ -1,29 +1,25 @@
-import = ["/home/gabriel/.config/alacritty/catppuccin/catppuccin-mocha.toml"]
-
 [env]
 TERM = "xterm-256color"
 
 [window]
-dynamic_padding = false
 blur = true
 opacity = 0.9
 
-[window.padding]
-x = 15
-y = 15
+[font]
+size = 14
 
 [font.bold]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 style = "Bold"
 
 [font.bold_italic]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 style = "Bold Italic"
 
 [font.italic]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 style = "Italic"
 
 [font.normal]
-family = "JetBrainsMono Nerd Font"
+family = "JetBrainsMono Nerd Font Mono"
 style = "Regular"
