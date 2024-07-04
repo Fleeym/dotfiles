@@ -1,6 +1,12 @@
 local telescope = require("telescope")
 
 telescope.setup {
+    pickers = {
+        find_files = {
+            hidden = true,
+            follow = true
+        }
+    },
     extensions = {
         file_browser = {
             hijack_netrw = true

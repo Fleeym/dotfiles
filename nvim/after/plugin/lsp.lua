@@ -25,7 +25,13 @@ lsp.format_on_save({
     },
     servers = {
         ['lua_ls'] = { 'lua' },
-        ['null-ls'] = { 'javascript', 'typescript', 'php', 'css', 'scss' },
+        ['null-ls'] = {
+            'javascript',
+            'typescript',
+            'php',
+            'css',
+            'scss'
+        },
     }
 })
 

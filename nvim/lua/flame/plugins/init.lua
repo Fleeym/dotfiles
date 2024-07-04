@@ -2,11 +2,16 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         branch = '0.1.x',
-        dependencies = { { 'nvim-lua/plenary.nvim' } }
+        dependencies = {
+            { 'nvim-lua/plenary.nvim' }
+        }
     },
     {
         "nvim-telescope/telescope-file-browser.nvim",
-        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+        requires = {
+            "nvim-telescope/telescope.nvim",
+            "nvim-lua/plenary.nvim"
+        }
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -16,6 +21,17 @@ return {
     { 'tpope/vim-fugitive' },
     { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
+    {
+        'L3MON4D3/LuaSnip',
+        version = "v2.*",
+        build = "make install_jsregexp"
+    },
+    {
+        'rafamadriz/friendly-snippets',
+        config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
+        end
+    },
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = "v3.x",
@@ -44,21 +60,6 @@ return {
         }
     },
     {
-        "windwp/nvim-autopairs",
-        dependencies = {
-            { "hrsh7th/nvim-cmp" }
-        },
-        config = function()
-            require("nvim-autopairs").setup {}
-            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-            local cmp = require('cmp')
-            cmp.event:on(
-                "confirm_done",
-                cmp_autopairs.on_confirm_done()
-            )
-        end
-    },
-    {
         "windwp/nvim-ts-autotag",
         config = function()
             require("nvim-ts-autotag").setup()
@@ -74,7 +75,14 @@ return {
             "nvimtools/none-ls-extras.nvim"
         }
     },
-    { 'lukas-reineke/indent-blankline.nvim' },
+    {
+        'lukas-reineke/indent-blankline.nvim',
+        main = "ibl",
+        opts = {},
+        config = function()
+            require('ibl').setup()
+        end
+    },
     {
         "lewis6991/gitsigns.nvim",
         config = function()
@@ -117,4 +125,42 @@ return {
             require('mini.comment').setup()
         end
     },
+    {
+        'echasnovski/mini.cursorword',
+        version = false,
+        config = function()
+            require('mini.cursorword').setup()
+        end
+    },
+    {
+        'echasnovski/mini.hipatterns',
+        version = false,
+        config = function()
+            require('mini.hipatterns').setup()
+        end
+    },
+    {
+        'echasnovski/mini.pairs',
+        version = false,
+        config = function()
+            require('mini.pairs').setup()
+        end
+    },
+    {
+        "christoomey/vim-tmux-navigator",
+        cmd = {
+            "TmuxNavigateLeft",
+            "TmuxNavigateDown",
+            "TmuxNavigateUp",
+            "TmuxNavigateRight",
+            "TmuxNavigatePrevious",
+        },
+        keys = {
+            { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+            { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+            { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+            { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+            { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+        },
+    }
 }
