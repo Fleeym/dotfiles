@@ -1,4 +1,12 @@
 return {
+    -- Undo stuff, not sure if I should use
+    { 'mbbill/undotree' },
+    -- Git integration
+    { 'tpope/vim-fugitive' },
+    -- Mason
+    { 'williamboman/mason.nvim' },
+    { 'williamboman/mason-lspconfig.nvim' },
+    -- File finder / ripgrep / file browser
     {
         "nvim-telescope/telescope.nvim",
         branch = '0.1.x',
@@ -13,14 +21,12 @@ return {
             "nvim-lua/plenary.nvim"
         }
     },
+    -- Syntax highlighting
     {
         'nvim-treesitter/nvim-treesitter',
         build = ":TSUpdate"
     },
-    { 'mbbill/undotree' },
-    { 'tpope/vim-fugitive' },
-    { 'williamboman/mason.nvim' },
-    { 'williamboman/mason-lspconfig.nvim' },
+    -- Snippets
     {
         'L3MON4D3/LuaSnip',
         version = "v2.*",
@@ -32,39 +38,30 @@ return {
             require('luasnip.loaders.from_vscode').lazy_load()
         end
     },
-    {
-        'VonHeikemen/lsp-zero.nvim',
-        branch = "v3.x",
-        lazy = true,
-        config = false,
-        dependencies = {
-            { "neovim/nvim-lspconfig" },
-            { "williamboman/mason.nvim" },
-            { "williamboman/mason-lspconfig.nvim" },
-            { "hrsh7th/nvim-cmp" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "rafamadriz/friendly-snippets" },
-            { "L3MON4D3/LuaSnip" }
-        }
-    },
+    -- LSP
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' }
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'williamboman/mason-lspconfig.nvim' }
         }
     },
+    -- Completions
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            { 'L3MON4D3/LuaSnip' }
+            { 'L3MON4D3/LuaSnip' },
+            { 'neovim/nvim-lspconfig' }
         }
     },
+    -- Auto close HTML tags
     {
         "windwp/nvim-ts-autotag",
         config = function()
             require("nvim-ts-autotag").setup()
         end
     },
+    -- Integration with linters / formatters
     {
         "nvimtools/none-ls.nvim",
         dependencies = { { "nvim-lua/plenary.nvim" } }
@@ -75,6 +72,7 @@ return {
             "nvimtools/none-ls-extras.nvim"
         }
     },
+    -- Indent visuals
     {
         'lukas-reineke/indent-blankline.nvim',
         main = "ibl",
@@ -83,34 +81,36 @@ return {
             require('ibl').setup()
         end
     },
+    -- I have no idea
     {
         "lewis6991/gitsigns.nvim",
         config = function()
             require('gitsigns').setup()
         end
     },
+    -- Bottom bar
     {
         "nvim-lualine/lualine.nvim",
         dependencies = {
             { "nvim-tree/nvim-web-devicons" }
         }
     },
+    -- Nice LSP utils like go to definition, doc preview
     {
         'nvimdev/lspsaga.nvim',
         dependencies = {
             { 'nvim-treesitter/nvim-treesitter' },
             { 'nvim-tree/nvim-web-devicons' }
         },
-        config = function()
-            require('lspsaga').setup({})
-        end
     },
+    -- Theme
     {
         "ellisonleao/gruvbox.nvim",
         priority = 1000,
         config = true,
         opts = ...
     },
+    -- mini.nvim
     {
         'echasnovski/mini.notify',
         version = false,
@@ -146,6 +146,7 @@ return {
             require('mini.pairs').setup()
         end
     },
+    -- Better integration with tmux
     {
         "christoomey/vim-tmux-navigator",
         cmd = {

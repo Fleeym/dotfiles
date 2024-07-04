@@ -1,4 +1,4 @@
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lspconfig')
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -10,51 +10,11 @@ require('mason-lspconfig').setup({
         'rust_analyzer'
     },
     handlers = {
-        lsp.default_setup
+        function(server_name)
+            lsp[server_name].setup {}
+        end
     }
 })
-
-lsp.on_attach(function(client, bufnr)
-    lsp.default_keymaps({ buffer = bufnr })
-end)
-
-lsp.format_on_save({
-    format_opts = {
-        async = false,
-        timeout_ms = 10000,
-    },
-    servers = {
-        ['lua_ls'] = { 'lua' },
-        ['null-ls'] = {
-            'javascript',
-            'typescript',
-            'php',
-            'css',
-            'scss'
-        },
-    }
-})
-
-require('lspconfig').lua_ls.setup({
-    settings = {
-        Lua = {
-            runtime = {
-                version = 'LuaJIT',
-            },
-            diagnostics = {
-                globals = { 'vim' }
-            },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
-            },
-            telemetry = {
-                enable = false,
-            }
-        }
-    }
-})
-
-lsp.setup()
 
 local null_ls = require("null-ls")
 
