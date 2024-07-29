@@ -1,0 +1,29 @@
+#!/bin/bash
+
+export SPLAT_DIR="${GEODE_SPLAT:-$HOME/libs/splat}"
+export TOOLCHAIN="${GEODE_TOOLCHAIN:-$HOME/libs/geode-toolchain/clang-cl-msvc.cmake}"
+export HOST_ARCH=x86_64
+
+export LLVM_VER="${GEODE_LLVM_VER:-18}"
+export CLANG_VER="${GEODE_CLANG_VER:-18}"
+export COMPILER=${GEODE_COMPILER:-/usr/bin/clang-cl}
+
+EXTRA="$*"
+
+CMAKE_ARGS="-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAIN -DCMAKE_C_COMPILER=$COMPILER -DCMAKE_CXX_COMPILER=$COMPILER"
+
+if [[ ! $EXTRA == *"-DCMAKE_BUILD_TYPE"* ]]; then
+    CMAKE_ARGS="$CMAKE_ARGS -DCMAKE_BUILD_TYPE=RelWithDebInfo"
+fi
+
+if [ ! -z "$EXTRA" ]; then
+    CMAKE_ARGS="$CMAKE_ARGS $EXTRA"
+fi
+
+if [ ! -d build ]; then
+    mkdir build
+fi
+    
+cd build && cmake $CMAKE_ARGS \
+    -G "Ninja" \
+    ..
