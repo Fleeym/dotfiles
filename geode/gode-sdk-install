@@ -1,0 +1,158 @@
+#!/bin/bash
+#
+# Made by Fleeym
+# https://github.com/Fleeym
+#
+# NAME: gode-sdk-install
+# DESC: A simple script that tries to install the Geode SDK and all required environment variables for a Linux system
+# WARNING: All the libraries have been placed according to personal taste
+# DEPENDENCIES: xwin, git, geode CLI
+
+if ! command -v xwin &> /dev/null
+then
+    echo "xwin has not been detected in your PATH. You need to have xwin installed."
+    exit 1
+fi
+
+if ! command -v git &> /dev/null
+then
+    echo "git has not been detected in your PATH. You need to have git installed."
+    exit 1
+fi
+
+if ! command -v geode &> /dev/null
+then
+    echo "The geode CLI has not been detected in your PATH. You need to have geode installed."
+    exit 1
+fi
+
+echo "## Welcome to gode-sdk-install"
+
+DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+
+if [ ! -d $DATA_HOME ]; then
+    mkdir $DATA_HOME
+fi
+
+GEODE_SHARE="$DATA_HOME/geode"
+
+echo "## Setting Geode data home to $GEODE_SHARE"
+
+if [ -d $GEODE_SHARE ]; then
+    while true; do
+        read -p "## $GEODE_SHARE already exists. Do you wish to remove it? [y/N] " yn
+        case $yn in
+            [Yy]* ) rm -rf $GEODE_SHARE; break;;
+            [Nn]* ) break;;
+            "" ) break;;
+            * ) echo "## Please answer yes or no.";;
+        esac
+    done
+fi
+
+if [ ! -d $GEODE_SHARE ]; then
+    mkdir $GEODE_SHARE
+fi
+
+SPLAT_DIR=$GEODE_SHARE/splat
+TOOLCHAIN_DIR=$GEODE_SHARE/toolchain
+GEODE_DIR=$GEODE_SHARE/sdk
+ENV_FILE=$GEODE_SHARE/env
+
+if [ -d $SPLAT_DIR ]; then
+    echo "## $SPLAT_DIR already exists"
+else
+    echo "## Installing splat..."
+    xwin --arch x86_64 --accept-license splat --include-debug-libs --output $SPLAT_DIR
+fi
+
+if [ -d $TOOLCHAIN_DIR ]; then
+    echo "## $TOOLCHAIN_DIR already exists"
+else
+    echo "## Installing the toolchain..."
+    git clone https://github.com/matcool/clang-msvc-sdk.git $TOOLCHAIN_DIR
+fi
+
+echo "## Installing the SDK..."
+
+INSTALL_SDK=1
+
+if [ ! -z $GEODE_SDK ]; then
+    if ! geode sdk version &> /dev/null; then
+        while true; do
+            read -p "## Found valid SDK installation at $GEODE_SDK. The script will install the SDK at $GEODE_DIR. Do you want to remove the current installation and let the script reinstall it? [y/N] " yn
+            case $yn in
+                [Yy]* ) 
+                    rm -rf $GEODE_SDK;
+                    unset GEODE_SDK;
+                    break;;
+                [Nn]* ) 
+                    unset INSTALL_SDK;
+                    break;;
+                "" ) 
+                    unset INSTALL_SDK;
+                    break;;
+                * ) echo "## Please answer yes or no.";;
+            esac
+        done
+    else
+        echo "## Found GEODE_SDK at $GEODE_SDK, but it is an invalid installation. Unsetting the variable."
+        unset GEODE_SDK
+    fi
+fi
+
+if [ ! -z $INSTALL_SDK ]; then
+    if [ -d $GEODE_DIR ]; then
+        echo "## $GEODE_DIR is a valid directory. Setting the GEODE_SDK env var."
+        GEODE_SDK="$GEODE_DIR"
+    fi
+
+    if ! geode sdk version &> /dev/null; then
+        geode sdk install $GEODE_DIR
+        GEODE_SDK="$GEODE_DIR"
+    else
+        echo "## SDK is already installed. Running an update."
+        geode sdk update
+    fi
+fi
+
+ENV_CONTENTS=$(cat << EOF
+#!/bin/bash
+
+export GEODE_SDK=$GEODE_DIR
+export GEODE_SPLAT=$SPLAT_DIR
+export GEODE_TOOLCHAIN=$TOOLCHAIN_DIR/clang-cl-msvc.cmake
+export GEODE_COMPILER=/usr/bin/clang-cl
+EOF
+)
+
+echo $ENV_CONTENTS > $ENV_FILE
+chmod +x $ENV_FILE
+
+echo "## Writing env var"
+
+WRITE_FILE=$HOME/.profile
+
+if [[ "$SHELL" == *zsh ]]
+then
+    WRITE_FILE=$HOME/.zshenv
+fi
+
+echo "## Writing env details to $WRITE_FILE"
+
+
+
+SOURCE_CONTENTS=$(cat << EOF
+
+# Added by gode-sdk-install
+
+source $ENV_FILE
+EOF
+)
+
+if ! grep -q "source $ENV_FILE" "$WRITE_FILE"; then
+    echo $SOURCE_CONTENTS >> $WRITE_FILE
+fi
+
+echo "## DONE!"
+
